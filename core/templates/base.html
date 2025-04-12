@@ -1,0 +1,50 @@
+{# Load the tag library #}
+{% load static %}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>tododev {% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+
+    <div class="container mx-auto p-5">
+        {% block content %}
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% endblock content %}
+    </div>
+
+    <!-- Custom Scripts -->
+    <script src="{% static 'js/scripts.js' %}"></script>
+    
+    <!-- Font Awesome CDN -->
+    <script src="https://kit.fontawesome.com/3b1ab49e86.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
