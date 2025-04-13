@@ -20,14 +20,21 @@
 
     <!-- Active Tasks Table -->
     <h4>Active Tasks</h4>
-    <table id="active-tasks" class="table">
-      {% render_table active_table %}
-    </table>
+    {% if active_table.page.object_list %}
+      <table id="active-tasks" class="table">
+        {% render_table active_table %}
+      </table>
+    {% else %}
+      <p class="text-muted">You have no active tasks.</p>
+    {% endif %}
 
-    <!-- Completed Tasks Table -->
     <h4>Completed Tasks</h4>
-    <table id="completed-tasks" class="table">
-      {% render_table completed_table %}
-    </table>
+    {% if completed_table.page.object_list %}
+      <table id="completed-tasks" class="table">
+        {% render_table completed_table %}
+      </table>
+    {% else %}
+      <p class="text-muted">No tasks have been completed yet.</p>
+    {% endif %}
   </div>
 {% endblock %}
