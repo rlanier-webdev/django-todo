@@ -1,0 +1,25 @@
+{% extends "admin_interface/base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if title %}
+        {{ title }} - {{ site_title }}
+    {% else %}
+        {{ site_title }}
+    {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script>
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        fetch('/set-timezone/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: new URLSearchParams({ timezone: tz })
+        });
+    </script>
+{% endblock %}

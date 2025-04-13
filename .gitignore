@@ -4,3 +4,4 @@ core/db.sqlite3
 .env
 /core/accounts/__pycache__
 /core/accounts/migrations
+/core/staticfiles

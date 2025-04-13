@@ -2,9 +2,5 @@
 
 {% block content %}
   <h1>Welcome</h1>
-  {% if user.is_authenticated %}
-    <p>Hello, {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
-  {% else %}
-    <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Sign Up</a></p>
-  {% endif %}
+  <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Sign Up</a></p>
 {% endblock %}

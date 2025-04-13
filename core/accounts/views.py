@@ -1,6 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+from zoneinfo import available_timezones
 from .forms import SignUpForm
+
+@csrf_exempt
+def set_timezone(request):
+    tz = request.POST.get('timezone')
+    if tz in available_timezones():
+        request.session['user_timezone'] = tz
+    return HttpResponse("Timezone set")
 
 def signup_view(request):
     if request.method == 'POST':
@@ -20,7 +30,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('home')
+            return redirect('/app/dashboard')
         else:
             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
     return render(request, 'accounts/login.html')
