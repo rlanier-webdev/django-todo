@@ -1,5 +1,6 @@
 {% extends "admin_interface/base.html" %}
 {% load static %}
+{% load tz %}
 
 {% block title %}
     {% if title %}
@@ -13,13 +14,20 @@
     {{ block.super }}
     <script>
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        fetch('/set-timezone/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: new URLSearchParams({ timezone: tz })
-        });
+
+        // Only send once per session
+        if (!sessionStorage.getItem('timezone_set')) {
+            fetch('/set-timezone/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: new URLSearchParams({ timezone: tz })
+            }).then(() => {
+                sessionStorage.setItem('timezone_set', '1');
+                location.reload(); // reload once to apply new timezone
+            });
+        }
     </script>
 {% endblock %}

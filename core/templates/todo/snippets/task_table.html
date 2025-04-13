@@ -1,0 +1,8 @@
+{% load render_table from django_tables2 %}
+
+{% if table.page.object_list %}
+  {% render_table table %}
+{% else %}
+  <p>No tasks to show.</p>
+{% endif %}
+
