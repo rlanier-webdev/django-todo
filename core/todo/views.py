@@ -11,10 +11,18 @@ from .tables import TaskTable
 
 @login_required
 def dashboard_view(request):
-    tasks = Task.objects.filter(user=request.user).order_by('-created_at')
-    table = TaskTable(tasks)
-    RequestConfig(request, paginate={"per_page": 10}).configure(table)
+    # Split tasks into active and completed
+    active_tasks = Task.objects.filter(user=request.user, is_completed=False).order_by('-created_at')
+    completed_tasks = Task.objects.filter(user=request.user, is_completed=True).order_by('-created_at')
 
+    # Separate tables for each
+    active_table = TaskTable(active_tasks)
+    completed_table = TaskTable(completed_tasks)
+
+    RequestConfig(request, paginate={"per_page": 10}).configure(active_table)
+    RequestConfig(request, paginate={"per_page": 10}).configure(completed_table)
+
+    # Handle task creation
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -25,7 +33,12 @@ def dashboard_view(request):
     else:
         form = TaskForm()
 
-    return render(request, 'todo/dashboard.html', {'table': table, 'form': form})
+    context = {
+        'form': form,
+        'active_table': active_table,
+        'completed_table': completed_table,
+    }
+    return render(request, 'todo/dashboard.html', context)
 
 @login_required
 def task_create(request):
@@ -65,21 +78,30 @@ def task_delete(request, task_id):
 
     return render(request, 'todo/task_confirm_delete.html', {'task': task})
 
-@csrf_exempt
+@csrf_exempt  # Temporarily disabling CSRF protection (be cautious with this)
 def toggle_completed(request, task_id):
     if request.method == 'POST':
         try:
-            print("Raw body:", request.body)
+            # Parse incoming request body
             data = json.loads(request.body)
-            print("Parsed JSON:", data)
+            is_completed = data.get('is_completed', False)
 
+            # Retrieve the task by ID and update its completion status
             task = Task.objects.get(id=task_id)
-            task.is_completed = data.get('is_completed', False)
+            task.is_completed = is_completed
             task.save()
+
+            # Return success response
             return JsonResponse({'success': True})
+
         except Task.DoesNotExist:
+            # If the task does not exist, return an error
             return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
+
         except Exception as e:
+            # Catch any other exceptions and return an error
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
 
+    # Handle non-POST requests
     return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
+

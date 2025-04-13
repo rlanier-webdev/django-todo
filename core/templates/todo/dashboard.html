@@ -1,18 +1,33 @@
 {% extends "base.html" %}
 
+{% load render_table from django_tables2 %}
+
 {% block content %}
-  <div class="d-flex justify-content-between align-items-center">
-    <h1>{{ user.username }}'s Dashboard</h1>
-    <a href="{% url 'logout' %}" class="btn btn-outline-secondary btn-sm">Logout</a>
+  <div class="container mt-5">
+    <!-- Dashboard Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>{{ user.username }}'s Dashboard</h1>
+      <a href="{% url 'logout' %}" class="btn btn-outline-secondary btn-sm">Logout</a>
+    </div>
+
+    <hr>
+
+    <!-- Task Creation Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3>Your Tasks</h3>
+      <a href="{% url 'task_create' %}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Add Task</a>
+    </div>
+
+    <!-- Active Tasks Table -->
+    <h4>Active Tasks</h4>
+    <table id="active-tasks" class="table">
+      {% render_table active_table %}
+    </table>
+
+    <!-- Completed Tasks Table -->
+    <h4>Completed Tasks</h4>
+    <table id="completed-tasks" class="table">
+      {% render_table completed_table %}
+    </table>
   </div>
-
-  <hr>
-
-  <div style="display: flex; justify-content: space-between; align-items: center;">
-    <h3>Your Tasks</h3>
-    <a href="{% url 'task_create' %}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Add Task</a>
-  </div>
-  
-  {% include "todo/snippets/task_table.html" %}
-
 {% endblock %}

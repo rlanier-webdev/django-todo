@@ -9,8 +9,10 @@ class TaskTable(tables.Table):
     is_completed = tables.Column(empty_values=())
 
     def render_priority(self, value):
+        # Normalize the priority to lowercase for consistent class application
         priority = str(value).lower().strip()  # normalize it to lowercase string
 
+        # Define CSS classes for different priority levels
         css_class = {
             'low': 'badge bg-success',
             'medium': 'badge bg-info text-dark',
@@ -21,6 +23,7 @@ class TaskTable(tables.Table):
         return format_html('<span class="{}">{}</span>', css_class, priority.capitalize())
 
     def render_actions(self, record):
+        # Generates 'Edit' and 'Delete' buttons for each task
         edit_url = reverse('task_edit', args=[record.pk])
         delete_url = reverse('task_delete', args=[record.pk])
         return format_html(
@@ -31,6 +34,7 @@ class TaskTable(tables.Table):
         )
 
     def render_is_completed(self, record):
+        # Renders the checkbox for completion toggle
         return format_html(
             '<input type="checkbox" class="form-check-input toggle-completed" data-id="{}" {}>',
             record.pk,
@@ -39,7 +43,6 @@ class TaskTable(tables.Table):
     
     class Meta:
         model = Task
-        template_name = "django_tables2/bootstrap5.html"
-        fields = ("title", "description", "priority", "deadline", "is_completed")  # don't include 'actions' here
-        sequence = ("title", "description", "priority", "deadline", "is_completed", "actions")
-
+        template_name = "django_tables2/bootstrap5.html"  # Use bootstrap5 template for styling
+        fields = ("title", "description", "priority", "deadline", "is_completed")  # Fields to display
+        sequence = ("title", "description", "priority", "deadline", "is_completed", "actions")  # Column order

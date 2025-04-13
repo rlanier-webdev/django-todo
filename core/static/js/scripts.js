@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     const checkboxes = document.querySelectorAll('.toggle-completed');
-  
+    
     checkboxes.forEach(checkbox => {
       checkbox.addEventListener('change', function () {
         const taskId = this.getAttribute('data-id');
         const isCompleted = this.checked;
-  
+        
         fetch(`/app/tasks/toggle-completed/${taskId}/`, {
           method: 'POST',
           headers: {
@@ -17,7 +17,24 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(res => res.json())
         .then(data => {
           if (!data.success) {
-            alert('Something went wrong: ' + (data.error || 'Unknown error'));
+            alert('Something went wrong.');
+          } else {
+            // Find the row
+            const row = this.closest('tr');
+    
+            // Get the table to append to based on completion status
+            const targetTable = isCompleted ? document.getElementById('completed-tasks') : document.getElementById('active-tasks');
+            
+            // Check if the target table exists before appending
+            if (targetTable) {
+              // Remove the row from its current position
+              row.parentNode.removeChild(row);
+              
+              // Append it to the target table
+              targetTable.appendChild(row);
+            } else {
+              console.error('Target table not found.');
+            }
           }
         })
         .catch(error => {
@@ -42,4 +59,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     return cookieValue;
   }
-               
+  
