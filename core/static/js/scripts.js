@@ -1,48 +1,40 @@
 document.addEventListener('DOMContentLoaded', function () {
     const checkboxes = document.querySelectorAll('.toggle-completed');
-    
+
     checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', function () {
-        const taskId = this.getAttribute('data-id');
-        const isCompleted = this.checked;
-        
-        fetch(`/app/tasks/toggle-completed/${taskId}/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')
-          },
-          body: JSON.stringify({ is_completed: isCompleted })
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (!data.success) {
-            alert('Something went wrong.');
-          } else {
-            // Find the row
-            const row = this.closest('tr');
-    
-            // Get the table to append to based on completion status
-            const targetTable = isCompleted ? document.getElementById('completed-tasks') : document.getElementById('active-tasks');
-            
-            // Check if the target table exists before appending
-            if (targetTable) {
-              // Remove the row from its current position
-              row.parentNode.removeChild(row);
-              
-              // Append it to the target table
-              targetTable.appendChild(row);
-            } else {
-              console.error('Target table not found.');
-            }
-          }
-        })
-        .catch(error => {
-          console.error('Fetch error:', error);
+        checkbox.addEventListener('change', function () {
+            const taskId = this.getAttribute('data-id');
+            const isCompleted = this.checked;
+
+            fetch(`/app/tasks/toggle-completed/${taskId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken') // Include the CSRF token here
+                },
+                body: JSON.stringify({ is_completed: isCompleted })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Instead of moving the row, simply reload the page
+                    // to re-render both tables with the updated data.
+                    location.reload();
+                } else {
+                    alert('Something went wrong.');
+                    console.error(data.error);
+                    // Optionally, revert the checkbox state on error
+                    this.checked = !isCompleted;
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                // Optionally, revert the checkbox state on error
+                this.checked = !isCompleted;
+            });
         });
-      });
     });
-  });
+});
   
   // Utility: Get CSRF token from cookie
   function getCookie(name) {
@@ -59,4 +51,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     return cookieValue;
   }
-  

@@ -78,7 +78,6 @@ def task_delete(request, task_id):
 
     return render(request, 'todo/task_confirm_delete.html', {'task': task})
 
-@csrf_exempt  # Temporarily disabling CSRF protection (be cautious with this)
 def toggle_completed(request, task_id):
     if request.method == 'POST':
         try:
