@@ -7,37 +7,41 @@
     <!-- Dashboard Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h1>My Dashboard</h1>
-      <a href="{% url 'logout' %}" class="btn btn-outline-secondary btn-sm">Logout</a>
+      <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
     </div>
-
-    <hr>
 
     <!-- Task Creation Section -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="mb-4">
       <h3>Your Tasks</h3>
-      <a href="{% url 'task_create' %}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Add Task</a>
-    </div>
+      <a href="{% url 'task_create' %}" class="btn btn-sm btn-primary mt-2">
+        <i class="fa-solid fa-plus"></i> Add Task
+      </a>
+    </div>    
 
     <div>
-      <!-- Active Tasks Table -->
-      <h4>Active Tasks</h4>
-      {% if active_table.page.object_list %}
-        <table id="active-tasks" class="table">
-          {% render_table active_table %}
-        </table>
-      {% else %}
-        <p class="text-muted">You have no active tasks.</p>
-      {% endif %}
+      <div class="bg-white p-4 mt-5">
+        <!-- Active Tasks Table -->
+        <h4>Active Tasks</h4>
+        {% if active_table.page.object_list %}
+          <table id="active-tasks" class="table">
+            {% render_table active_table %}
+          </table>
+        {% else %}
+          <p class="text-muted">You have no active tasks.</p>
+        {% endif %}
+      </div>
 
       <!-- Completed Tasks Table -->
-      <h4>Completed Tasks</h4>
-      {% if completed_table.page.object_list %}
-        <table id="completed-tasks" class="table">
-          {% render_table completed_table %}
-        </table>
-      {% else %}
-        <p class="text-muted">No tasks have been completed yet.</p>
-      {% endif %}
+      <div class="bg-white p-4 mt-5">
+        <h4>Completed Tasks</h4>
+        {% if completed_table.page.object_list %}
+          <table id="completed-tasks" class="table">
+            {% render_table completed_table %}
+          </table>
+        {% else %}
+          <p class="text-muted">No tasks have been completed yet.</p>
+        {% endif %}
+      </div>
     </div>
   </div>
 {% endblock %}
