@@ -2,6 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from .forms import TaskForm
 from django_tables2.config import RequestConfig
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json     
 from .models import Task
 from .tables import TaskTable
 
@@ -61,3 +64,22 @@ def task_delete(request, task_id):
         return redirect('dashboard')  # Redirect to the 'dashboard' view
 
     return render(request, 'todo/task_confirm_delete.html', {'task': task})
+
+@csrf_exempt
+def toggle_completed(request, task_id):
+    if request.method == 'POST':
+        try:
+            print("Raw body:", request.body)
+            data = json.loads(request.body)
+            print("Parsed JSON:", data)
+
+            task = Task.objects.get(id=task_id)
+            task.is_completed = data.get('is_completed', False)
+            task.save()
+            return JsonResponse({'success': True})
+        except Task.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)

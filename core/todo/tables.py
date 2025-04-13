@@ -6,6 +6,7 @@ from .models import Task
 class TaskTable(tables.Table):
     priority = tables.Column()
     actions = tables.Column(empty_values=(), orderable=False)
+    is_completed = tables.Column(empty_values=())
 
     def render_priority(self, value):
         priority = str(value).lower().strip()  # normalize it to lowercase string
@@ -29,6 +30,13 @@ class TaskTable(tables.Table):
             delete_url
         )
 
+    def render_is_completed(self, record):
+        return format_html(
+            '<input type="checkbox" class="form-check-input toggle-completed" data-id="{}" {}>',
+            record.pk,
+            'checked' if record.is_completed else ''
+        )
+    
     class Meta:
         model = Task
         template_name = "django_tables2/bootstrap5.html"
