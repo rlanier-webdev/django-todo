@@ -27,8 +27,8 @@ class TaskTable(tables.Table):
         edit_url = reverse('task_edit', args=[record.pk])
         delete_url = reverse('task_delete', args=[record.pk])
         return format_html(
-            '<a href="{}" class="btn btn-sm btn-primary me-1">Edit</a>'
-            '<a href="{}" class="btn btn-sm btn-danger">Delete</a>',
+            '<a href="{}" class="btn btn-sm btn-primary me-1"><i class="fa-solid fa-pencil"></i></a>'
+            '<a href="{}" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>',
             edit_url,
             delete_url
         )

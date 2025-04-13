@@ -48,4 +48,6 @@ def logout_view(request):
     return redirect('login')
 
 def home_view(request):
+    if request.user.is_authenticated:
+        return redirect('/app/dashboard') 
     return render(request, 'home.html')
