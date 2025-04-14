@@ -1,3 +1,7 @@
+Sure! Here's an updated version of your README with sections on **cloning the project** and **screenshot**.
+
+---
+
 # Todo App with Django
 
 A simple Todo App built with Django where users can manage tasks, mark them as complete, and organize them into active and completed categories. This app provides a dashboard where users can interact with tasks, view active tasks, and move them to a completed section.
@@ -38,3 +42,77 @@ A simple Todo App built with Django where users can manage tasks, mark them as c
 
 ### 7. **Table Pagination**
    - Active and completed tasks are paginated, with a maximum of 10 tasks displayed per page.
+
+## Cloning the Project
+
+To clone this project to your local machine and get started, follow these steps:
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/rlanier-webdev/django-todo.git
+   ```
+
+2. **Navigate to the project folder:**
+
+   ```bash
+   cd django-todo/core
+   ```
+
+3. **Create a virtual environment (optional but recommended):**
+
+   ```bash
+   python -m venv venv
+   ```
+
+4. **Activate the virtual environment:**
+   - For **Windows**:
+
+     ```bash
+     venv\Scripts\activate
+     ```
+
+   - For **macOS/Linux**:
+
+     ```bash
+     source venv/bin/activate
+     ```
+
+5. **Install the dependencies:**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+6. **Apply migrations:**
+
+   ```bash
+   python manage.py migrate
+   ```
+
+7. **Create a superuser (to log in and access the admin interface):**
+
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+8. **Run the development server:**
+
+   ```bash
+   python manage.py runserver
+   ```
+
+9. Open your browser and go to `http://127.0.0.1:8000/` to view the app.
+
+## Screenshots
+
+Here are some screenshots of the app in action:
+
+### Home Page (Login Screen):
+![Home Page](https://via.placeholder.com/800x400.png?text=Home+Page)
+
+### Dashboard (After Login):
+![Dashboard](https://via.placeholder.com/800x400.png?text=Dashboard)
+
+### Task Management:
+![Task Management](https://via.placeholder.com/800x400.png?text=Task+Management)
