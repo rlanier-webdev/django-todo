@@ -109,9 +109,11 @@ Here are some screenshots of the app in action:
 ![SignUp](https://github.com/user-attachments/assets/f02a428d-f6ea-4578-83fe-5b2038ff1e83)
 
 ### Dashboard (After Login):
-![Dashboard](https://github.com/user-attachments/assets/08c38aa2-269f-4c4e-9095-4f008f9fb171)
-![Dashboard](https://github.com/user-attachments/assets/d4abc7dc-efab-48ac-90ff-0f0398732df8)
+![Dashboard](https://github.com/user-attachments/assets/b6d5686e-cf85-477c-8d59-950bdb3d1781)
+![Dashboard](https://github.com/user-attachments/assets/d4b3c09f-ad49-4009-ade2-fa46eac02221)
 
 ### Task Management:
 ![Create Task](https://github.com/user-attachments/assets/28726ea6-7f88-478f-9346-fe3a3a60c20d)
-![Edit Task](https://github.com/user-attachments/assets/c411344f-dc6f-4fc0-b2ca-f64e4f3c3588)
+![View Task](https://github.com/user-attachments/assets/26f22960-f701-490a-8e9c-cad2e29ebf46)
+![Edit Task](https://github.com/user-attachments/assets/d3cfc721-f78e-49b8-a91b-4b2c122d6fe1)
+
