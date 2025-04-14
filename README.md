@@ -109,10 +109,13 @@ To clone this project to your local machine and get started, follow these steps:
 Here are some screenshots of the app in action:
 
 ### Home Page (Login Screen):
-![Home Page](https://via.placeholder.com/800x400.png?text=Home+Page)
+![Login](https://github.com/user-attachments/assets/a7637e58-f559-41a1-9ab1-86fa598cd30a)
+![SignUp](https://github.com/user-attachments/assets/f02a428d-f6ea-4578-83fe-5b2038ff1e83)
 
 ### Dashboard (After Login):
-![Dashboard](https://via.placeholder.com/800x400.png?text=Dashboard)
+![Dashboard](https://github.com/user-attachments/assets/08c38aa2-269f-4c4e-9095-4f008f9fb171)
+![Dashboard](https://github.com/user-attachments/assets/d4abc7dc-efab-48ac-90ff-0f0398732df8)
 
 ### Task Management:
-![Task Management](https://via.placeholder.com/800x400.png?text=Task+Management)
+![Create Task](https://github.com/user-attachments/assets/28726ea6-7f88-478f-9346-fe3a3a60c20d)
+![Edit Task](https://github.com/user-attachments/assets/c411344f-dc6f-4fc0-b2ca-f64e4f3c3588)
