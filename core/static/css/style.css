@@ -2,7 +2,7 @@ h3 {
     font-size: 1.50rem;
 }
 .table thead {
-    color: #343a40;
+    color: #212529;
 }
 .table thead tr th {
     text-transform: uppercase;
@@ -12,5 +12,5 @@ h3 {
 }
 .table thead tr th a:link, .table thead tr th a:visited, .table thead tr th a:active {
     text-decoration: none;
-    color: #343a40;
+    color: #212529;
 }

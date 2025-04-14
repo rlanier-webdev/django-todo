@@ -11,7 +11,7 @@ class TaskTable(tables.Table):
 
     def render_title(self, value, record):
         return format_html(
-            '<a href="{}" class="fw-bold text-body">{}</a>',
+            '<a href="{}" class="fw-bold text-body text-decoration-none">{}</a>',
             reverse('task_view', args=[record.id]),
             value
         )
