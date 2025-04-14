@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, authenticate, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
@@ -7,6 +7,7 @@ from zoneinfo import available_timezones
 from django.utils.timezone import activate
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm
+
 
 @csrf_exempt
 def set_timezone(request):
@@ -32,7 +33,12 @@ def signup_view(request):
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
+
 def login_view(request):
+    # Check if the user is already authenticated
+    if request.user.is_authenticated:
+        return redirect(reverse('dashboard')) # Redirect to dashboard or any other page for authenticated users
+    
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -42,11 +48,12 @@ def login_view(request):
             return redirect('/app/dashboard')
         else:
             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
+    
     return render(request, 'accounts/login.html')
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 def home_view(request):
     login_form = AuthenticationForm()
