@@ -1,7 +1,3 @@
-Sure! Here's an updated version of your README with sections on **cloning the project** and **screenshot**.
-
----
-
 # Todo App with Django
 
 A simple Todo App built with Django where users can manage tasks, mark them as complete, and organize them into active and completed categories. This app provides a dashboard where users can interact with tasks, view active tasks, and move them to a completed section.
