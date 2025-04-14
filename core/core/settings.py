@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # 3rd party
     'bootstrap5',
     'django_tables2',
+    'django_filters',
 
     # internal
     'accounts',

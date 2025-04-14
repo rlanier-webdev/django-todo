@@ -6,23 +6,28 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json     
 from .models import Task
-from .tables import TaskTable
+from .tables import TaskTable, TaskFilter
 
 
 @login_required
 def dashboard_view(request):
-    # Split tasks into active and completed
-    active_tasks = Task.objects.filter(user=request.user, is_completed=False).order_by('-created_at')
-    completed_tasks = Task.objects.filter(user=request.user, is_completed=True).order_by('-created_at')
+    # Apply the TaskFilter to the tasks
+    task_filter = TaskFilter(request.GET, queryset=Task.objects.filter(user=request.user))
+    filtered_tasks = task_filter.qs
+
+    # Split the filtered tasks into active and completed tasks
+    active_tasks = filtered_tasks.filter(is_completed=False).order_by('-created_at')
+    completed_tasks = filtered_tasks.filter(is_completed=True).order_by('-created_at')
 
     # Separate tables for each
     active_table = TaskTable(active_tasks)
     completed_table = TaskTable(completed_tasks)
 
+    # Paginate the tables
     RequestConfig(request, paginate={"per_page": 10}).configure(active_table)
     RequestConfig(request, paginate={"per_page": 10}).configure(completed_table)
 
-    # Handle task creation
+    # Handle task creation (unchanged)
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -37,6 +42,7 @@ def dashboard_view(request):
         'form': form,
         'active_table': active_table,
         'completed_table': completed_table,
+        'filter': task_filter,  # Pass the filter to the template
     }
     return render(request, 'todo/dashboard.html', context)
 

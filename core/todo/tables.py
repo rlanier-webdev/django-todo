@@ -1,7 +1,33 @@
 import django_tables2 as tables # type: ignore
 from django.urls import reverse
 from django.utils.html import format_html
+import django_filters
+from django import forms
 from .models import Task
+
+class TaskFilter(django_filters.FilterSet):
+    # Define filters for task fields
+    title = django_filters.CharFilter(
+        lookup_expr='icontains',
+        label='Title',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Search title...'})
+    )
+    priority = django_filters.ChoiceFilter(
+        choices=Task.PRIORITY_CHOICES,
+        label='Priority',
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    deadline = django_filters.DateFilter(
+        lookup_expr='gte',
+        label='Deadline After',
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
+    )
+
+
+    class Meta:
+        model = Task
+        fields = ['title', 'priority', 'deadline']  # filterable fields
+
 
 class TaskTable(tables.Table):
     title = tables.Column()

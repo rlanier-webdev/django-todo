@@ -10,16 +10,30 @@
       <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
     </div>
 
+    <!--Filter-->
+    <div class="d-flex justify-content-center mb-2">
+      <form method="get" class="mt-2 row row-cols-lg-auto g-3 align-items-end p-3 rounded shadow bg-light">
+        {% for field in filter.form %}
+          <div class="col">
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+          </div>
+        {% endfor %}
+        <div class="col">
+          <button type="submit" class="btn btn-primary">Apply</button>
+        </div>
+      </form>
+    </div>
+
     <!-- Task Creation Section -->
     <div class="mb-4">
-      <h3>Your Tasks</h3>
       <a href="{% url 'task_create' %}" class="btn btn-sm btn-primary mt-2">
         <i class="fa-solid fa-plus"></i> Add Task
       </a>
-    </div>    
+    </div> 
 
     <div>
-      <div class="bg-white p-4 mt-5">
+      <div class="bg-white p-4 mt-5 rounded shadow bg-light">
         <!-- Active Tasks Table -->
         <h4>Active Tasks</h4>
         {% if active_table.page.object_list %}
@@ -32,7 +46,7 @@
       </div>
 
       <!-- Completed Tasks Table -->
-      <div class="bg-white p-4 mt-5">
+      <div class="bg-white p-4 mt-5 rounded shadow bg-light">
         <h4>Completed Tasks</h4>
         {% if completed_table.page.object_list %}
           <table id="completed-tasks" class="table">
