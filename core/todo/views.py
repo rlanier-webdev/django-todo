@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from .forms import TaskForm
-from django_tables2.config import RequestConfig
+from django_tables2.config import RequestConfig # type: ignore
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json     
@@ -39,6 +39,11 @@ def dashboard_view(request):
         'completed_table': completed_table,
     }
     return render(request, 'todo/dashboard.html', context)
+
+@login_required
+def task_view(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+    return render(request, 'todo/task_view.html', {'task': task})
 
 @login_required
 def task_create(request):
