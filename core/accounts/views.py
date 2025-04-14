@@ -37,7 +37,7 @@ def signup_view(request):
 def login_view(request):
     # Check if the user is already authenticated
     if request.user.is_authenticated:
-        return redirect(reverse('dashboard')) # Redirect to dashboard or any other page for authenticated users
+        return redirect(reverse('dashboard')) 
     
     if request.method == 'POST':
         username = request.POST['username']
