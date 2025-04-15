@@ -19,19 +19,18 @@
           </div>
         {% endfor %}
         <div class="col">
-          <button type="submit" class="btn btn-primary">Apply</button>
+          <button type="submit" class="btn btn-primary" title="Apply">Apply</button>
         </div>
       </form>
     </div>
 
     <!-- Task Creation Section -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <a href="{% url 'task_create' %}" class="btn btn-sm btn-primary mt-2">
+      <a href="{% url 'task_create' %}" class="btn btn-sm btn-primary mt-2" title="Add Task">
         <i class="fa-solid fa-plus"></i> Add Task
       </a>
 
-      <a href="{% url 'calendar_view' %}" class="btn btn-outline-primary"><i class="fa-solid fa-calendar-days"></i> Calendar View</a>
-
+      <a href="{% url 'calendar_view' %}" class="btn btn-outline-primary" title="Calendar View"><i class="fa-solid fa-calendar-days"></i> Calendar View</a>
     </div> 
 
     <div>

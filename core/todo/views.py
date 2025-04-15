@@ -49,7 +49,7 @@ def dashboard_view(request):
 @login_required
 def task_view(request, task_id):
     task = get_object_or_404(Task, id=task_id, user=request.user)
-    
+
     previous_page = request.META.get('HTTP_REFERER', '/')
 
     return render(request, 'todo/task_view.html', {
@@ -93,7 +93,16 @@ def task_delete(request, task_id):
         task.delete()
         return redirect('dashboard')  # Redirect to the 'dashboard' view
 
-    return render(request, 'todo/task_confirm_delete.html', {'task': task})
+    # Safely get the previous page or fallback to dashboard
+    previous_page = request.META.get('HTTP_REFERER')
+    if not previous_page:
+        from django.urls import reverse
+        previous_page = reverse('dashboard')
+
+    return render(request, 'todo/task_confirm_delete.html', {
+        'task': task,
+        'previous_page': previous_page
+    })
 
 def toggle_completed(request, task_id):
     if request.method == 'POST':
