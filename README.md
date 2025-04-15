@@ -112,15 +112,18 @@ To clone this project to your local machine and get started, follow these steps:
 Here are some screenshots of the app in action:
 
 ### Home Page (Login Screen):
-![Login](https://github.com/user-attachments/assets/a7637e58-f559-41a1-9ab1-86fa598cd30a)
-![SignUp](https://github.com/user-attachments/assets/f02a428d-f6ea-4578-83fe-5b2038ff1e83)
+![Login Screen](https://github.com/user-attachments/assets/7735adf1-a934-4ba9-b938-33f90f3ab7b5)
+![Sign Up Screen](https://github.com/user-attachments/assets/f10d2099-6961-4304-843e-bcb57e0d2708)
 
 ### Dashboard (After Login):
-![Dashboard](https://github.com/user-attachments/assets/b6d5686e-cf85-477c-8d59-950bdb3d1781)
-![Dashboard](https://github.com/user-attachments/assets/d4b3c09f-ad49-4009-ade2-fa46eac02221)
+![Empty Dashboard](https://github.com/user-attachments/assets/fa436cbf-623c-4f65-a52c-c7632ddf7b02)
+![Dashboard with Tasks](https://github.com/user-attachments/assets/ae5facd9-7a81-467c-a12f-20a6b5d972d4)
 
 ### Task Management:
 ![Create Task](https://github.com/user-attachments/assets/28726ea6-7f88-478f-9346-fe3a3a60c20d)
 ![View Task](https://github.com/user-attachments/assets/26f22960-f701-490a-8e9c-cad2e29ebf46)
 ![Edit Task](https://github.com/user-attachments/assets/d3cfc721-f78e-49b8-a91b-4b2c122d6fe1)
+
+### Calendar View:
+![Calendar](https://github.com/user-attachments/assets/483ef950-877a-4dbc-b3f4-fd00d978a490)
 
