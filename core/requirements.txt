@@ -4,6 +4,7 @@ Django==5.2
 django-admin-interface==0.30.0
 django-bootstrap-v5==1.0.11
 django-colorfield==0.13.0
+django-filter==25.1
 django-tables2==2.7.5
 pillow==11.2.1
 python-slugify==8.0.4
