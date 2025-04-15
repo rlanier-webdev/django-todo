@@ -125,5 +125,5 @@ Here are some screenshots of the app in action:
 ![Edit Task](https://github.com/user-attachments/assets/d3cfc721-f78e-49b8-a91b-4b2c122d6fe1)
 
 ### Calendar View:
-![Calendar](https://github.com/user-attachments/assets/483ef950-877a-4dbc-b3f4-fd00d978a490)
+![Calendar](https://github.com/user-attachments/assets/5630a3df-32f1-4eac-9686-ed9369b0f0b2)
 
