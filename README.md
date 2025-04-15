@@ -39,6 +39,13 @@ A simple Todo App built with Django where users can manage tasks, mark them as c
 ### 7. **Table Pagination**
    - Active and completed tasks are paginated, with a maximum of 10 tasks displayed per page.
 
+### 8. **📅 Calendar View**
+- Visual overview of all tasks using FullCalendar.
+- Tasks appear on their respective due dates.
+- Hover or click to view task details.
+- Access from the dashboard via the **Calendar View** button.
+- Built with [FullCalendar](https://fullcalendar.io/) for rich interaction and styling.
+
 ## Cloning the Project
 
 To clone this project to your local machine and get started, follow these steps:
