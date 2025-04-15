@@ -115,3 +115,10 @@ def toggle_completed(request, task_id):
     # Handle non-POST requests
     return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
 
+def calendar_view(request):
+    tasks = Task.objects.filter(user=request.user)
+
+    context = {
+        'tasks': tasks,
+    }
+    return render(request, 'todo/calendar_view.html', context)
