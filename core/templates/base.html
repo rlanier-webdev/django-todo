@@ -26,8 +26,16 @@
 <body class="bg-light">
 
     <div class="container mx-auto p-5">
-        {% block content %}
+        {% if user.is_authenticated %} 
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">tododev</h1>
+            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+        </div>
+        <hr>
+        {%endif%}
 
+        {% block content %}
+        
         {% endblock content %}
     </div>
 

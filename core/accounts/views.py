@@ -5,8 +5,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from zoneinfo import available_timezones
 from django.utils.timezone import activate
-from django.contrib.auth.forms import AuthenticationForm
-from .forms import SignUpForm
+from .forms import SignUpForm, CustomLoginForm
 
 
 @csrf_exempt
@@ -56,7 +55,7 @@ def logout_view(request):
     return redirect('home')
 
 def home_view(request):
-    login_form = AuthenticationForm()
+    login_form = CustomLoginForm()
     signup_form = SignUpForm()
     return render(request, "home.html", {
         "login_form": login_form,

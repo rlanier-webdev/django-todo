@@ -11,4 +11,4 @@ class TaskForm(forms.ModelForm):
             'priority': forms.Select(attrs={'class': 'form-control'}),  # Dropdown for priority
             'deadline': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),  # DateTime input
         }
-    
+
