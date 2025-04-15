@@ -49,7 +49,13 @@ def dashboard_view(request):
 @login_required
 def task_view(request, task_id):
     task = get_object_or_404(Task, id=task_id, user=request.user)
-    return render(request, 'todo/task_view.html', {'task': task})
+    
+    previous_page = request.META.get('HTTP_REFERER', '/')
+
+    return render(request, 'todo/task_view.html', {
+        'task': task,
+        'previous_page': previous_page,
+    })
 
 @login_required
 def task_create(request):

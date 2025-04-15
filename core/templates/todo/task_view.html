@@ -19,7 +19,7 @@
         {% endif %}
       </p>
       <a href="{% url 'task_edit' task.id %}" class="btn btn-primary me-2">Edit Task</a>
-      <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+      <a href="{{ previous_page }}" class="btn btn-secondary">Back</a>
     </div>
   </div>
 </div>
