@@ -13,9 +13,9 @@
       <p class="card-text">
         <strong>Status:</strong>
         {% if task.is_completed %}
-          <span class="text-success">Completed</span>
+          <span class="badge bg-success">Completed</span>
         {% else %}
-          <span class="text-warning">Active</span>
+          <span class="badge bg-warning text-dark">Active</span>
         {% endif %}
       </p>
       <a href="{% url 'task_edit' task.id %}" class="btn btn-primary me-2">Edit Task</a>
