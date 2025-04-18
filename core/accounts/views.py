@@ -55,8 +55,8 @@ def logout_view(request):
     return redirect('home')
 
 def home_view(request):
-    login_form = CustomLoginForm()
-    signup_form = SignUpForm()
+    login_form = CustomLoginForm(prefix='login')
+    signup_form = SignUpForm(prefix='signup')
     return render(request, "home.html", {
         "login_form": login_form,
         "signup_form": signup_form
