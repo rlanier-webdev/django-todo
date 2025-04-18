@@ -78,12 +78,13 @@ def task_edit(request, task_id):
     if request.method == "POST":
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
-            form.save()
+            form.save()  # Save the task with updated status
             return redirect('dashboard')  # Redirect to the 'dashboard' view
     else:
         form = TaskForm(instance=task)
 
     return render(request, 'todo/task_edit.html', {'form': form})
+
 
 @login_required
 def task_delete(request, task_id):
@@ -111,13 +112,24 @@ def toggle_completed(request, task_id):
             data = json.loads(request.body)
             is_completed = data.get('is_completed', False)
 
-            # Retrieve the task by ID and update its completion status
+            # Retrieve the task by ID
             task = Task.objects.get(id=task_id)
+
+            # Update the 'is_completed' field
             task.is_completed = is_completed
+
+            # Update the 'status' field based on 'is_completed'
+            task.status = 'complete' if is_completed else 'in progress'
+
+            # Save the task instance
             task.save()
 
-            # Return success response
-            return JsonResponse({'success': True})
+            # Return success response with updated data
+            return JsonResponse({
+                'success': True,
+                'is_completed': task.is_completed,
+                'status': task.status
+            })
 
         except Task.DoesNotExist:
             # If the task does not exist, return an error

@@ -10,14 +10,7 @@
       <p class="card-text"><strong>Description:</strong> {{ task.description }}</p>
       <p class="card-text"><strong>Priority:</strong> {{ task.priority }}</p>
       <p class="card-text"><strong>Deadline:</strong> {{ task.deadline|date:"F d, Y" }}</p>
-      <p class="card-text">
-        <strong>Status:</strong>
-        {% if task.is_completed %}
-          <span class="badge bg-success">Completed</span>
-        {% else %}
-          <span class="badge bg-warning text-dark">Active</span>
-        {% endif %}
-      </p>
+      <p class="card-text"><strong>Status:</strong> {{ task.status }}</p>
       <a href="{% url 'task_edit' task.id %}" class="btn btn-primary me-2">Edit Task</a>
       <a href="{{ previous_page }}" class="btn btn-secondary">Back</a>
     </div>

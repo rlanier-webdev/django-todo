@@ -24,11 +24,15 @@ class TaskFilter(django_filters.FilterSet):
         label='Deadline After',
         widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
     )
-
+    status = django_filters.ChoiceFilter(
+        choices=Task.STATUS_CHOICES,
+        label='Status',
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
 
     class Meta:
         model = Task
-        fields = ['title', 'priority', 'deadline']  # filterable fields
+        fields = ['title', 'priority', 'deadline','status']  # filterable fields
 
 
 class TaskTable(tables.Table):
@@ -36,6 +40,7 @@ class TaskTable(tables.Table):
     priority = tables.Column()
     actions = tables.Column(empty_values=(), orderable=False)
     is_completed = tables.Column(empty_values=())
+    status = tables.Column()
 
     def render_title(self, value, record):
         return format_html(
@@ -96,5 +101,5 @@ class TaskTable(tables.Table):
     class Meta:
         model = Task
         template_name = "django_tables2/bootstrap5.html"  # Use bootstrap5 template for styling
-        fields = ("title", "description", "priority", "deadline", "is_completed")  # Fields to display
-        sequence = ("title", "description", "priority", "deadline", "is_completed", "actions")  # Column order
+        fields = ("title", "description", "priority", "deadline", "status", "is_completed")  # Fields to display
+        sequence = ("title", "description", "priority", "deadline", "status","is_completed", "actions")  # Column order
