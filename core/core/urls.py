@@ -16,9 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponse
+
+def ping_session(request):
+    return HttpResponse("pong")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('app/', include('todo.urls')),
+
+    path('ping-session/', ping_session, name='ping-session'),
 ]
