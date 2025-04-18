@@ -1,8 +1,6 @@
 # Changelog
-
-## [v1.5.2] - 2025-04-18
+## [v1.5.3] - 2025-04-18
 ### Added
-- Added visual clarity to incomplete tasks by styling their checkboxes with a border.
 - "Clear" button to the task filter form for improved usability.
 
 ### Fixed
@@ -10,6 +8,10 @@
 - Resolved `MultiValueDictKeyError` in the signup form by ensuring unique `name` and `id` attributes for all form fields.
 - Corrected form field conflicts between the login and signup forms.
 - Enhanced error handling in the signup form for improved user experience.
+- 
+## [v1.5.2] - 2025-04-18
+### Added
+- Added visual clarity to incomplete tasks by styling their checkboxes with a border.
 
 ## [v1.5.1] - 2025-04-18
 
