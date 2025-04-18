@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.5.1] - 2025-04-18
+
+### Added
+- **Session Timeout Warning**
+  - Users receive a SweetAlert2 warning modal 1 minute before session expiration.
+  - Sessions automatically expire after 28 minutes of inactivity.
+  - Timeout logic added to `scripts.js`.
+
+- **Overdue task deadline highlight**: 
+  - Tasks with a deadline that has passed now have their background highlighted in red to indicate overdue status.
+
+### Changed
+- Updated settings for static file management and included necessary configurations.
+
+### Fixed
+- **Static Files Loading**
+  - Corrected `BASE_DIR` path to point to the correct project root.
+  - Updated `STATICFILES_DIRS` to reference the actual `static` directory.
+  - Resolved `ImproperlyConfigured` error by skipping `STATIC_ROOT` in development.
+
 ## [v1.5.0] - 2025-04-18
 
 ### Added

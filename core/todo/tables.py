@@ -1,6 +1,8 @@
 import django_tables2 as tables # type: ignore
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.timezone import now
+from django.utils.formats import date_format
 import django_filters
 from django import forms
 from .models import Task
@@ -78,6 +80,12 @@ class TaskTable(tables.Table):
             'checked' if record.is_completed else ''
         )
     
+    def render_deadline(self, value):
+        if value and value < now():
+            # Highlight overdue deadline
+            return format_html('<span class="bg-danger text-white p-1 rounded">{}</span>', date_format(value, "DATETIME_FORMAT"))
+        return date_format(value, "DATETIME_FORMAT") if value else ''
+
     class Meta:
         model = Task
         template_name = "django_tables2/bootstrap5.html"  # Use bootstrap5 template for styling
