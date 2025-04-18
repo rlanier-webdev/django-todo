@@ -2,6 +2,8 @@ core/db.sqlite3
 /tenv
 /core/core/__pycache__
 .env
+.envprod
 /core/accounts/__pycache__
 /core/accounts/migrations
 /core/staticfiles
+db.sqlite3
