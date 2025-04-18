@@ -73,12 +73,16 @@ class TaskTable(tables.Table):
         )
 
     def render_is_completed(self, record):
-        # Renders the checkbox for completion toggle
+        # Add 'bordered-checkbox' class only if the task is not completed
+        checkbox_class = 'form-check-input toggle-completed bordered-checkbox' if not record.is_completed else 'form-check-input toggle-completed'
         return format_html(
-            '<input type="checkbox" class="form-check-input toggle-completed" data-id="{}" {}>',
+            '<input type="checkbox" class="{}" data-id="{}" {}>',
+            checkbox_class,
             record.pk,
             'checked' if record.is_completed else ''
         )
+
+
     
     def render_deadline(self, value, record):
         if value and value < now() and not record.is_completed:

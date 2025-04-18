@@ -1,6 +1,7 @@
 core/db.sqlite3
 /tenv
 /core/core/__pycache__
+/core/core/settings/__pycache__
 .env
 .envprod
 /core/accounts/__pycache__

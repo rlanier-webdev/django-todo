@@ -69,19 +69,19 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  function autoLogout() {
-      window.location.href = '/logout/';
-  }
+    function autoLogout() {
+        window.location.href = '/logout/';
+    }
 
     // Reset the session timer on user activity
     ['click', 'mousemove', 'keydown', 'scroll'].forEach(event => {
-      document.addEventListener(event, function() {
-          console.log('Activity detected');
-          resetSessionTimers();
-      });
-  });
+        document.addEventListener(event, resetSessionTimers);
+    });
 
-  resetSessionTimers();
+    // 🛑 Key addition: delay timer start by 3 seconds to avoid instant logout after load
+    setTimeout(() => {
+        resetSessionTimers();
+    }, 3000);
 });
 
 // Utility: Get CSRF token from cookie
