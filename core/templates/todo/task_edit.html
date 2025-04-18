@@ -72,21 +72,6 @@
         {% endif %}
       </div>
 
-      <!-- Is Completed Checkbox -->
-      <div class="mb-3 form-check">
-        {{ form.is_completed }}
-        <label class="form-check-label" for="{{ form.is_completed.id_for_label }}">
-          Completed
-        </label>
-        {% if form.is_completed.errors %}
-          <div class="invalid-feedback">
-            {% for error in form.is_completed.errors %}
-              <p>{{ error }}</p>
-            {% endfor %}
-          </div>
-        {% endif %}
-      </div>
-
       <button type="submit" class="btn btn-success">Save changes</button>
       <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
     </form>
