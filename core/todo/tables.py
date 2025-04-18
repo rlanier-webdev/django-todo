@@ -80,10 +80,13 @@ class TaskTable(tables.Table):
             'checked' if record.is_completed else ''
         )
     
-    def render_deadline(self, value):
-        if value and value < now():
-            # Highlight overdue deadline
-            return format_html('<span class="bg-danger text-white p-1 rounded">{}</span>', date_format(value, "DATETIME_FORMAT"))
+    def render_deadline(self, value, record):
+        if value and value < now() and not record.is_completed:
+            # Overdue and not completed — highlight background
+            return format_html(
+                '<span class="bg-danger text-white p-1 rounded">{}</span>',
+                date_format(value, "DATETIME_FORMAT")
+            )
         return date_format(value, "DATETIME_FORMAT") if value else ''
 
     class Meta:
