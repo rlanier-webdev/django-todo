@@ -9,8 +9,8 @@
       
       <!-- Username Field -->
       <div class="mb-3">
-        <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
-        {{ form.username }}
+        <label for="signup-username" class="form-label">Username</label>
+        <input type="text" name="signup-username" id="signup-username" class="form-control {% if form.username.errors %}is-invalid{% endif %}" value="{{ form.username.value }}">
         {% if form.username.errors %}
           <div class="invalid-feedback d-block">
             {% for error in form.username.errors %}
@@ -22,8 +22,8 @@
       
       <!-- Email Field -->
       <div class="mb-3">
-        <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
-        {{ form.email }}
+        <label for="signup-email" class="form-label">Email</label>
+        <input type="email" name="signup-email" id="signup-email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" value="{{ form.email.value }}">
         {% if form.email.errors %}
           <div class="invalid-feedback d-block">
             {% for error in form.email.errors %}
@@ -35,8 +35,8 @@
       
       <!-- Password Field -->
       <div class="mb-3">
-        <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
-        {{ form.password1 }}
+        <label for="signup-password1" class="form-label">Password</label>
+        <input type="password" name="signup-password1" id="signup-password1" class="form-control {% if form.password1.errors %}is-invalid{% endif %}" value="{{ form.password1.value }}">
         {% if form.password1.errors %}
           <div class="invalid-feedback d-block">
             {% for error in form.password1.errors %}
@@ -48,8 +48,8 @@
 
       <!-- Confirm Password Field -->
       <div class="mb-3">
-        <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
-        {{ form.password2 }}
+        <label for="signup-password2" class="form-label">Confirm Password</label>
+        <input type="password" name="signup-password2" id="signup-password2" class="form-control {% if form.password2.errors %}is-invalid{% endif %}" value="{{ form.password2.value }}">
         {% if form.password2.errors %}
           <div class="invalid-feedback d-block">
             {% for error in form.password2.errors %}
