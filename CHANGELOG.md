@@ -1,6 +1,11 @@
 # Changelog
 
-## [1.5.1] - 2025-04-18
+## [v1.5.2] - 2025-04-18
+### Enhanced
+- Added visual clarity to incomplete tasks by styling their checkboxes with a border.
+- Completed tasks retain a clean, borderless checkbox for minimal distraction.
+
+## [v1.5.1] - 2025-04-18
 
 ### Added
 - **Session Timeout Warning**
