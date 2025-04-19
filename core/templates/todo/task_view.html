@@ -20,12 +20,12 @@
     <h5>Activity Log</h5>
     <ul class="list-group">
       {% for log in task.activities.all %}
-        <li class="list-group-item">
-          <small><strong>{{ log.user.username }}</strong> {{ log.action }} — {{ log.timestamp|date:"SHORT_DATETIME_FORMAT" }}</small>
+        <li class="list-group-item mb-3">
+          <small class="fw-bold"><strong class="pe-2">{{ log.user.username }}</strong> {{ log.action }} — {{ log.timestamp|date:"SHORT_DATETIME_FORMAT" }}</small>
           {% if log.changes.message %}
             <ul class="mb-0 ps-3 small">
               {% for line in log.changes.message.splitlines %}
-                <li>📝 {{ line }}</li>
+                <li><i class="fa-solid fa-pencil text-orange"></i> {{ line }}</li>
               {% endfor %}
             </ul>
           {% endif %}

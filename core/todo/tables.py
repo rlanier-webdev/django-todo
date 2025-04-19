@@ -87,7 +87,6 @@ class TaskTable(tables.Table):
             'checked' if record.is_completed else ''
         )
 
-    
     def render_deadline(self, value, record):
         if value and value < now() and not record.is_completed:
             # Overdue and not completed — highlight background
@@ -96,6 +95,14 @@ class TaskTable(tables.Table):
                 date_format(value, "DATETIME_FORMAT")
             )
         return date_format(value, "DATETIME_FORMAT") if value else ''
+    
+    def render_description(self, value):
+        max_length = 50
+        return format_html(
+            '<span title="{}">{}</span>',
+            value,
+            f"{value[:max_length]}..." if len(value) > max_length else value
+        )
 
     class Meta:
         model = Task

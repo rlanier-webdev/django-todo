@@ -18,7 +18,7 @@ class Task(models.Model):
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Link each task to a user
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     is_completed = models.BooleanField(default=False, verbose_name='Completed')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created')

@@ -1,6 +1,9 @@
 h3 {
     font-size: 1.50rem;
 }
+.text-orange {
+    color: orange !important;
+  }
 .table thead {
     color: #212529;
 }
