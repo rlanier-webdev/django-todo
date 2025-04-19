@@ -11,9 +11,11 @@
       <p class="card-text text-capitalize"><strong>Priority:</strong> {{ task.priority }}</p>
       <p class="card-text"><strong>Deadline:</strong> {{ task.deadline|date:"F d, Y" }}</p>
       <p class="card-text text-capitalize"><strong>Status:</strong> {{ task.status }}</p>
+
       <a href="{% url 'task_edit' task.id %}" class="btn btn-primary me-2">Edit Task</a>
       <a href="{{ previous_page }}" class="btn btn-secondary">Back</a>
     </div>
+
   </div>
 
   <div class="mt-3">

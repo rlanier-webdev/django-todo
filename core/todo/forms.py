@@ -30,4 +30,3 @@ class TaskForm(forms.ModelForm):
             instance.save()
         return instance
 
-

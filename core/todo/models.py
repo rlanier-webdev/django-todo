@@ -41,7 +41,6 @@ def update_task_status(sender, instance, **kwargs):
         else:
             instance.status = 'in progress'
 
-
 class TaskActivity(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='activities')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -51,3 +50,4 @@ class TaskActivity(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+

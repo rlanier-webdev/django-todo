@@ -1,6 +1,19 @@
 # Changelog
-## [v1.7] - 2025-04-18
+## [v1.7.1] - 2025-04-19
+### Changed
+- Task model: Reduced maximum length of the `title` field from 255 to 100 characters for improved data consistency.
+- `Task.title` field max length reduced from 255 to 100 characters for consistency with UI display.
+- Dashboard table now limits task title display to 25 characters with full title shown on hover.
+- 
+### Added
+- UI enhancement: Task descriptions in the dashboard table are now truncated to 75 characters for better readability.
+- Full task descriptions are still accessible via tooltips when hovering over the truncated text.
 
+### Removed
+- Removed the `description` column from the TaskTable to avoid horizontal expansion issues.
+- Updated the layout to prevent overflow and ensure proper table display.
+
+## [v1.7] - 2025-04-18
 ### Added
 - **Task Activity Log functionality**
   - Captures task creation and updates with detailed field-level tracking (Title, Priority, Deadline, Status).
