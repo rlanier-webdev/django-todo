@@ -43,10 +43,10 @@ class TaskTable(tables.Table):
     status = tables.Column()
 
     def render_title(self, value, record):
-        max_length = 20
+        max_length = 30
         truncated = (value[:max_length] + '...') if len(value) > max_length else value
         return format_html(
-            '<a href="{}" class="fw-bold text-body text-decoration-none" title="{}">{}</a>',
+            '<a href="{}" class="fw-bold text-body text-decoration-none fixed-column-width" title="{}">{}</a>',
             reverse('task_view', args=[record.id]),
             value,  # full title in tooltip
             truncated  # truncated display
@@ -95,21 +95,13 @@ class TaskTable(tables.Table):
         if value and value < now() and not record.is_completed:
             # Overdue and not completed — highlight background
             return format_html(
-                '<span class="bg-danger text-white p-1 rounded">{}</span>',
+                '<span class="bg-danger text-white p-1 rounded fixed-column-width">{}</span>',
                 date_format(value, "DATETIME_FORMAT")
             )
         return date_format(value, "DATETIME_FORMAT") if value else ''
-    
-    def render_description(self, value):
-        max_length = 50
-        return format_html(
-            '<span title="{}">{}</span>',
-            value,
-            f"{value[:max_length]}..." if len(value) > max_length else value
-        )
 
     class Meta:
         model = Task
         template_name = "django_tables2/bootstrap5.html"  # Use bootstrap5 template for styling
-        fields = ("title", "description", "priority", "deadline", "status", "is_completed")  # Fields to display
-        sequence = ("title", "description", "priority", "deadline", "status","is_completed", "actions")  # Column order
+        fields = ("title", "priority", "deadline", "status", "is_completed")  # Fields to display
+        sequence = ("title", "priority", "deadline", "status","is_completed", "actions")  # Column order

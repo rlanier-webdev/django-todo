@@ -33,3 +33,27 @@ h3 {
     border: 1.5px solid #6c757d;
     border-radius: 4px;
 }
+.table-container {
+    max-height: none;
+    overflow: auto;
+    padding: 10px;
+    height: auto;
+  }
+
+table {
+    table-layout: auto;
+    width: 100%;  /* Table expands based on content */
+}
+
+td, th {
+    height: auto;  /* Rows expand vertically with content */
+}
+
+.fixed-column-width {
+    max-width: 30px !important;
+    white-space: normal;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+}
+  
