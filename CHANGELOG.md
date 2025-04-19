@@ -1,4 +1,19 @@
 # Changelog
+## [v1.7] - 2025-04-18
+
+### Added
+- **Task Activity Log functionality**
+  - Captures task creation and updates with detailed field-level tracking (Title, Priority, Deadline, Status).
+  - User-friendly change format:
+    - Title Changed from ... to ...
+    - Priority Changed from ... to ...
+    - Deadline Changed from ... to ...
+    - Status Changed from ... to ...
+  - **Only fields that have changed** are logged, reducing noise in the activity log.
+  - **Implemented `post_save` signal** to capture task updates and store activities.
+- **Improved UI** to display task activity in a clean, readable format.
+  - Activity logs now show the user, action (Created/Updated), timestamp, and changes made.
+
 ## [v1.6] - 2025-04-18
 ### Added
 - New `status` field to `Task` model with options: `pending`, `in progress`, `completed`.

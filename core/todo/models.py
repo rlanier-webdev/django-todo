@@ -41,3 +41,13 @@ def update_task_status(sender, instance, **kwargs):
         else:
             instance.status = 'in progress'
 
+
+class TaskActivity(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='activities')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    action = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    changes = models.JSONField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['-timestamp']

@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 
     # internal
     'accounts',
-    'todo',
+    'todo.apps.TodoConfig',
+    
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
