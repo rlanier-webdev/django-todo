@@ -43,11 +43,15 @@ class TaskTable(tables.Table):
     status = tables.Column()
 
     def render_title(self, value, record):
+        max_length = 20
+        truncated = (value[:max_length] + '...') if len(value) > max_length else value
         return format_html(
-            '<a href="{}" class="fw-bold text-body text-decoration-none">{}</a>',
+            '<a href="{}" class="fw-bold text-body text-decoration-none" title="{}">{}</a>',
             reverse('task_view', args=[record.id]),
-            value
+            value,  # full title in tooltip
+            truncated  # truncated display
         )
+
     
     def render_priority(self, value):
         # Normalize the priority to lowercase for consistent class application
