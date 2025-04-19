@@ -29,7 +29,7 @@ class TaskFilter(django_filters.FilterSet):
         label='Status',
         widget=forms.Select(attrs={'class': 'form-select'})
     )
-
+    
     class Meta:
         model = Task
         fields = ['title', 'priority', 'deadline','status']  # filterable fields
@@ -86,7 +86,6 @@ class TaskTable(tables.Table):
             record.pk,
             'checked' if record.is_completed else ''
         )
-
 
     
     def render_deadline(self, value, record):

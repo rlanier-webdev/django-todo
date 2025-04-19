@@ -11,15 +11,15 @@ from .tables import TaskTable, TaskFilter
 
 @login_required
 def dashboard_view(request):
-    # Apply the TaskFilter to the tasks
+    # Filter the tasks based on the GET params and the current user's tasks
     task_filter = TaskFilter(request.GET, queryset=Task.objects.filter(user=request.user))
     filtered_tasks = task_filter.qs
 
-    # Split the filtered tasks into active and completed tasks
+    # Split the filtered tasks after the filter has been applied
     active_tasks = filtered_tasks.filter(is_completed=False).order_by('-created_at')
     completed_tasks = filtered_tasks.filter(is_completed=True).order_by('-created_at')
 
-    # Separate tables for each
+    # Separate tables for active and completed tasks
     active_table = TaskTable(active_tasks)
     completed_table = TaskTable(completed_tasks)
 
@@ -27,7 +27,7 @@ def dashboard_view(request):
     RequestConfig(request, paginate={"per_page": 10}).configure(active_table)
     RequestConfig(request, paginate={"per_page": 10}).configure(completed_table)
 
-    # Handle task creation (unchanged)
+    # Handle task creation
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -45,6 +45,8 @@ def dashboard_view(request):
         'filter': task_filter,  # Pass the filter to the template
     }
     return render(request, 'todo/dashboard.html', context)
+
+
 
 @login_required
 def task_view(request, task_id):
@@ -119,7 +121,7 @@ def toggle_completed(request, task_id):
             task.is_completed = is_completed
 
             # Update the 'status' field based on 'is_completed'
-            task.status = 'complete' if is_completed else 'in progress'
+            task.status = 'completed' if is_completed else 'in progress'
 
             # Save the task instance
             task.save()

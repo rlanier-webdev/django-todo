@@ -1,4 +1,17 @@
 # Changelog
+## [v1.6] - 2025-04-18
+### Added
+- New `status` field to `Task` model with options: `pending`, `in progress`, `completed`.
+- Admins and users can now manually set task status via the UI.
+
+### Enhanced
+- `TaskForm` updated to include an editable `status` dropdown.
+- Custom `save()` method in `TaskForm` syncs `status` and `is_completed`:
+  - If status is 'completed', `is_completed` is auto-checked.
+  - If status is 'pending' or 'in progress', `is_completed` is auto-unchecked.
+  - If status is not set, it defaults based on `is_completed`.
+- Ensures consistent logic across form submission, UI, and model updates.
+
 ## [v1.5.3] - 2025-04-18
 ### Added
 - "Clear" button to the task filter form for improved usability.

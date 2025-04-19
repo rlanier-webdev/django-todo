@@ -2,9 +2,11 @@ core/db.sqlite3
 /tenv
 /core/core/__pycache__
 /core/core/settings/__pycache__
+/core/todo/__pycache__
 .env
 .envprod
 /core/accounts/__pycache__
 /core/accounts/migrations
 /core/staticfiles
 db.sqlite3
+core/todo/__pycache__/tables.cpython-313.pyc
