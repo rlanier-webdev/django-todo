@@ -1,4 +1,4 @@
-## [1.8.0] - 2025-04-20
+## [v1.8.0] - 2025-04-20
 
 ### Added
 - Category model allowing users to categorize tasks (e.g., "Work", "Personal").
