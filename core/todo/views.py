@@ -4,8 +4,9 @@ from .forms import TaskForm
 from django_tables2.config import RequestConfig # type: ignore
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 import json     
-from .models import Task
+from .models import Task, Category
 from .tables import TaskTable, TaskFilter
 
 
@@ -81,7 +82,7 @@ def task_edit(request, task_id):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()  # Save the task with updated status
-            return redirect('dashboard')  # Redirect to the 'dashboard' view
+            return redirect('dashboard')
     else:
         form = TaskForm(instance=task)
 
@@ -94,7 +95,7 @@ def task_delete(request, task_id):
 
     if request.method == "POST":
         task.delete()
-        return redirect('dashboard')  # Redirect to the 'dashboard' view
+        return redirect('dashboard')
 
     # Safely get the previous page or fallback to dashboard
     previous_page = request.META.get('HTTP_REFERER')
@@ -151,3 +152,15 @@ def calendar_view(request):
         'tasks': tasks,
     }
     return render(request, 'todo/calendar_view.html', context)
+
+@login_required
+@require_POST
+def add_category(request):
+    name = request.POST.get('name')
+    if name:
+        category, created = Category.objects.get_or_create(name=name)
+        return JsonResponse({
+            'id': category.id,
+            'name': category.name
+        })
+    return JsonResponse({'error': 'Name is required'}, status=400)

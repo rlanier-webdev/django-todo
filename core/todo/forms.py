@@ -4,13 +4,14 @@ from .models import Task
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'priority', 'deadline', 'status']
+        fields = ['title', 'description', 'priority', 'deadline', 'status','category']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
             'priority': forms.Select(attrs={'class': 'form-control'}),
             'deadline': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-select', 'id': 'id_category'}),
         }
 
     def save(self, commit=True):

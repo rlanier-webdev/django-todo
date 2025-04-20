@@ -59,6 +59,16 @@
         {% endif %}
       </div>
 
+      <div class="mb-3">
+        <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+        <div class="d-flex align-items-center">
+          {{ form.category }}
+          <button type="button" class="btn btn-sm btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>    
+
       <!-- Status Field -->
       <div class="mb-3">
         <label for="{{ form.status.id_for_label }}" class="form-label">Status</label>
@@ -75,5 +85,62 @@
       <button type="submit" class="btn btn-success">Save changes</button>
       <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
     </form>
+
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="category-form">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h5 class="modal-title">Add New Category</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input type="text" name="name" class="form-control" placeholder="Category name" required>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <script>
+    document.getElementById('category-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const name = form.name.value;
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  
+      fetch("{% url 'add_category' %}", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRFToken': csrfToken
+        },
+        body: new URLSearchParams({ name })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.id) {
+          // Create option and add to select
+          const select = document.getElementById("id_category");
+          const option = new Option(data.name, data.id, true, true);
+          select.add(option);
+          select.value = data.id;
+  
+          // Close modal
+          const modal = bootstrap.Modal.getInstance(document.getElementById('addCategoryModal'));
+          modal.hide();
+  
+          // Reset form
+          form.reset();
+        }
+      });
+    });
+  </script>
+  
 {% endblock %}
+

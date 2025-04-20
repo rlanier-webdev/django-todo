@@ -1,4 +1,16 @@
-# Changelog
+## [1.8.0] - 2025-04-20
+
+### Added
+- Category model allowing users to categorize tasks (e.g., "Work", "Personal").
+- Modal with AJAX to add categories from task form via plus icon.
+- Category field to task form and templates.
+- Category field to task filter interface.
+- Category change tracking in task activity logs.
+
+### Changed
+- Improved UI layout for category input and dropdown.
+- Enhanced form widgets with support for multiple CSS classes.
+
 ## [v1.7.1] - 2025-04-19
 ### Changed
 - Task model: Reduced maximum length of the `title` field from 255 to 100 characters for improved data consistency.

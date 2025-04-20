@@ -36,10 +36,16 @@ def log_task_activity(sender, instance, created, **kwargs):
             "priority": "Priority",
             "deadline": "Deadline",
             "status": "Status",
-            "is_completed": "Completion"
+            "is_completed": "Completion",
+            "category": "Category" 
         }
 
-        display_value = lambda val: val.strftime('%Y-%m-%d %H:%M') if hasattr(val, 'strftime') else str(val).capitalize()
+        def display_value(val):
+            if hasattr(val, 'strftime'):
+                return val.strftime('%Y-%m-%d %H:%M')
+            elif hasattr(val, 'name'):
+                return val.name  # For category or other FK objects
+            return str(val).capitalize()
 
         messages = []
         for field in field_labels:
@@ -47,7 +53,9 @@ def log_task_activity(sender, instance, created, **kwargs):
             new_value = getattr(instance, field)
 
             if old_value != new_value:
-                messages.append(f"{field_labels[field]} changed from **{display_value(old_value)}** to **{display_value(new_value)}**")
+                messages.append(
+                    f"{field_labels[field]} changed from **{display_value(old_value)}** to **{display_value(new_value)}**"
+                )
 
         if messages:
             TaskActivity.objects.create(
@@ -56,5 +64,6 @@ def log_task_activity(sender, instance, created, **kwargs):
                 action="Updated",
                 changes={"message": "\n".join(messages)}
             )
+
 
 

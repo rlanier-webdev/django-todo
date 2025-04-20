@@ -5,7 +5,7 @@ from django.utils.timezone import now
 from django.utils.formats import date_format
 import django_filters
 from django import forms
-from .models import Task
+from .models import Task, Category
 
 class TaskFilter(django_filters.FilterSet):
     # Define filters for task fields
@@ -29,10 +29,16 @@ class TaskFilter(django_filters.FilterSet):
         label='Status',
         widget=forms.Select(attrs={'class': 'form-select'})
     )
-    
+    category = django_filters.ModelChoiceFilter(
+        queryset=Category.objects.all(),
+        label="Category",
+        empty_label="All Categories", 
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+
     class Meta:
         model = Task
-        fields = ['title', 'priority', 'deadline','status']  # filterable fields
+        fields = ['title', 'priority', 'deadline','category','status']  # filterable fields
 
 
 class TaskTable(tables.Table):

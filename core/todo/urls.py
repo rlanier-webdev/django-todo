@@ -11,5 +11,6 @@ urlpatterns = [
     path('tasks/toggle-completed/<int:task_id>/', toggle_completed, name='toggle_completed'),
 
     path('calendar/', calendar_view, name='calendar_view'),
+    path('categories/add/', add_category, name='add_category'),
 
 ]
