@@ -4,39 +4,51 @@
 <div class="container mt-5">
   <h2 class="mb-4">Task Details</h2>
 
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">{{ task.title }}</h4>
-      <p class="card-text"><strong>Description:</strong> {{ task.description }}</p>
-      <p class="card-text text-capitalize"><strong>Priority:</strong> {{ task.priority }}</p>
-      <p class="card-text"><strong>Deadline:</strong> {{ task.deadline|date:"F d, Y" }}</p>
-      <p class="card-text text-capitalize"><strong>Category:</strong> {{ task.category }}</p>
-      <p class="card-text text-capitalize"><strong>Status:</strong> {{ task.status }}</p>
+  <div class="row">
+    <!-- Task Info -->
+    <div class="col-md-7">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h4 class="card-title">{{ task.title }}</h4>
+          <p class="card-text"><strong>Description:</strong> {{ task.description }}</p>
+          <p class="card-text text-capitalize"><strong>Priority:</strong> {{ task.priority }}</p>
+          <p class="card-text"><strong>Deadline:</strong> {{ task.deadline|date:"F d, Y" }}</p>
+          <p class="card-text text-capitalize"><strong>Category:</strong> {{ task.category }}</p>
+          <p class="card-text text-capitalize"><strong>Status:</strong> {{ task.status }}</p>
 
-      <a href="{% url 'task_edit' task.id %}" class="btn btn-primary me-2">Edit Task</a>
-      <a href="{{ previous_page }}" class="btn btn-secondary">Back</a>
+          <a href="{% url 'task_edit' task.id %}" class="btn btn-primary me-2">Edit Task</a>
+          <a href="{{ previous_page }}" class="btn btn-secondary">Back</a>
+        </div>
+      </div>
     </div>
 
-  </div>
-
-  <div class="mt-3">
-    <h5>Activity Log</h5>
-    <ul class="list-group">
-      {% for log in task.activities.all %}
-        <li class="list-group-item mb-3">
-          <small class="fw-bold"><strong class="pe-2">{{ log.user.username }}</strong> {{ log.action }} — {{ log.timestamp|date:"SHORT_DATETIME_FORMAT" }}</small>
-          {% if log.changes.message %}
-            <ul class="mb-0 ps-3 small">
-              {% for line in log.changes.message.splitlines %}
-                <li><i class="fa-solid fa-pencil text-orange"></i> {{ line }}</li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        </li>
-      {% empty %}
-        <li class="list-group-item text-muted">No activity yet.</li>
-      {% endfor %}
-    </ul>
+    <!-- Activity Log -->
+    <div class="col-md-5">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Activity Log</h5>
+          <ul class="list-group list-group-flush">
+            {% for log in task.activities.all %}
+              <li class="list-group-item">
+                <small class="fw-bold d-block">
+                  <strong class="pe-2">{{ log.user.username }}</strong>
+                  {{ log.action }} — {{ log.timestamp|date:"SHORT_DATETIME_FORMAT" }}
+                </small>
+                {% if log.changes.message %}
+                  <ul class="mb-0 ps-3 small">
+                    {% for line in log.changes.message.splitlines %}
+                      <li><i class="fa-solid fa-pencil text-orange"></i> {{ line }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+            {% empty %}
+              <li class="list-group-item text-muted">No activity yet.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

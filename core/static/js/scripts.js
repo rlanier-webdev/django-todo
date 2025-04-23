@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener(event, resetSessionTimers);
     });
 
-    // 🛑 Key addition: delay timer start by 3 seconds to avoid instant logout after load
+    // Delay timer start by 3 seconds to avoid instant logout after load
     setTimeout(() => {
         resetSessionTimers();
     }, 3000);

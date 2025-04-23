@@ -1,3 +1,10 @@
+## [1.8.1] - 2025-04-20
+
+### Enhanced
+- Task detail page now uses a two-column layout.
+- Activity log is displayed beside task details for improved visibility and user experience.
+
+
 ## [v1.8.0] - 2025-04-20
 
 ### Added

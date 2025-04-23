@@ -33,7 +33,7 @@ class TaskFilter(django_filters.FilterSet):
         queryset=Category.objects.all(),
         label="Category",
         empty_label="All Categories", 
-        widget=forms.Select(attrs={'class': 'form-select'})
+        widget=forms.Select(attrs={'class': 'form-select text-capitalize'})
     )
 
     class Meta:
