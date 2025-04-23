@@ -12,7 +12,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Categories"
-        
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -43,7 +43,7 @@ class Task(models.Model):
     deadline = models.DateTimeField(null=True, blank=True) 
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='pending')
     is_completed = models.BooleanField(default=False, verbose_name='Completed')
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='tasks')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='tasks')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated')
 
@@ -52,8 +52,6 @@ class Task(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-
-
 
 @receiver(pre_save, sender=Task)
 def update_task_status(sender, instance, **kwargs):
