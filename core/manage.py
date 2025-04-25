@@ -2,11 +2,13 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from decouple import config
+import environ
 
 def main():
     """Run administrative tasks."""
-    environment = config("ENVIRONMENT", default="development").lower()
+    env = environ.Env()
+    environ.Env.read_env()
+    environment = env("ENVIRONMENT", default="development").lower()
 
     if environment == "production":
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.prod')

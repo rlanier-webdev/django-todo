@@ -4,6 +4,7 @@ core/db.sqlite3
 /core/core/settings/__pycache__
 /core/todo/__pycache__
 .env
+.envdev
 .envprod
 /core/accounts/__pycache__
 /core/accounts/migrations

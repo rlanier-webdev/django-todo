@@ -1,12 +1,19 @@
-## [1.8.1] - 2025-04-20
+## [1.8.2] - 2025-04-24
+### Changed
+- Switched from `python-decouple` to `django-environ` for environment variable management.
+  - Updated settings to use `env()` instead of `config()`.
+  - Replaced `config("ENVIRONMENT")` with `env('ENVIRONMENT', default='development')`.
 
+### Removed
+- Removed `python-decouple` from the project dependencies.
+
+## [1.8.1] - 2025-04-20
 ### Enhanced
 - Task detail page now uses a two-column layout.
 - Activity log is displayed beside task details for improved visibility and user experience.
 
 
 ## [v1.8.0] - 2025-04-20
-
 ### Added
 - Category model allowing users to categorize tasks (e.g., "Work", "Personal").
 - Modal with AJAX to add categories from task form via plus icon.
