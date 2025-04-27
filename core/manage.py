@@ -1,19 +1,34 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
-import os
+import os, io
 import sys
 import environ
+from pathlib import Path
 
 def main():
     """Run administrative tasks."""
     env = environ.Env()
-    environ.Env.read_env()
+    BASE_DIR = Path(__file__).resolve().parent.parent
+
+    # Check for a local .env file
+    env_path = BASE_DIR / '.env'
+    if env_path.exists():
+        print("Loading settings from local .env file.")
+        env.read_env(str(env_path))
+    elif os.environ.get("DJANGO_SETTINGS"):
+        print("Loading settings from DJANGO_SETTINGS environment variable.")
+        env.read_env(io.StringIO(os.environ.get("DJANGO_SETTINGS")))
+    else:
+        print("No local .env or DJANGO_SETTINGS found. Using default environment.")
+
     environment = env("ENVIRONMENT", default="development").lower()
 
     if environment == "production":
+        print("Prod environment detected.")
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.prod')
     else:
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.dev')
+        print("Dev environment detected.")
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.base')
 
     try:
         from django.core.management import execute_from_command_line
