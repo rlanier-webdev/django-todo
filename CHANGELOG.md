@@ -1,3 +1,16 @@
+## [1.8.3] - 2025-11-10
+### Fixed
+- Corrected Django settings initialization in `manage.py` by replacing the custom `APPLICATION_SETTINGS_MODULE` variable with the required `DJANGO_SETTINGS_MODULE`.
+- Resolved `ImproperlyConfigured` errors caused by Django not loading the appropriate settings module.
+- Updated signup form input names to match Django form field names (`username`, `email`, `password1`, `password2`), ensuring POST data binds correctly.
+- Fixed issue where form fields always displayed “This field is required.” and showed `None` as default values.
+
+### Improved
+- Added environment-aware settings loading (`core.settings.base` vs `core.settings.prod`).
+- Improved readability of environment selection logic in `manage.py` by introducing a `settings_module` variable.
+- Enhanced developer feedback with clear console output during settings loading.
+
+
 ## [1.8.2] - 2025-04-24
 ### Changed
 - Switched from `python-decouple` to `django-environ` for environment variable management.
