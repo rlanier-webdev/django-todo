@@ -15,20 +15,20 @@ def main():
     if env_path.exists():
         print("Loading settings from local .env file.")
         env.read_env(str(env_path))
-    elif os.environ.get("DJANGO_SETTINGS"):
-        print("Loading settings from DJANGO_SETTINGS environment variable.")
-        env.read_env(io.StringIO(os.environ.get("DJANGO_SETTINGS")))
+    elif os.environ.get("APPLICATION_SETTINGS"):
+        print("Loading settings from APPLICATION_SETTINGS environment variable.")
+        env.read_env(io.StringIO(os.environ.get("APPLICATION_SETTINGS")))
     else:
-        print("No local .env or DJANGO_SETTINGS found. Using default environment.")
+        print("No local .env or APPLICATION_SETTINGS found. Using default environment.")
 
     environment = env("ENVIRONMENT", default="development").lower()
 
     if environment == "production":
         print("Prod environment detected.")
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.prod')
+        os.environ.setdefault('APPLICATION_SETTINGS_MODULE', 'core.settings.prod')
     else:
         print("Dev environment detected.")
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.base')
+        os.environ.setdefault('APPLICATION_SETTINGS_MODULE', 'core.settings.base')
 
     try:
         from django.core.management import execute_from_command_line
