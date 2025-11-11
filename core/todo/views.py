@@ -5,10 +5,11 @@ from django_tables2.config import RequestConfig # type: ignore
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-import json     
+import json, logging     
 from .models import Task, Category
 from .tables import TaskTable, TaskFilter
 
+logger = logging.getLogger(__name__)
 
 @login_required
 def dashboard_view(request):
@@ -139,8 +140,14 @@ def toggle_completed(request, task_id):
             return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
 
         except Exception as e:
-            # Catch any other exceptions and return an error
-            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+            # Log the real error for debugging
+            logger.exception("Unexpected error in your_view")
+
+            # Return a generic message to the user
+            return JsonResponse(
+                {'success': False, 'error': 'An unexpected error occurred. Please try again later.'},
+                status=400
+            )
 
     # Handle non-POST requests
     return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
