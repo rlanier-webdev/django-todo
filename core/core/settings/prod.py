@@ -7,7 +7,7 @@ from .base import *
 import environ
 
 env = environ.Env()
-env.read_env(io.StringIO(os.environ.get("APPLICATION_SETTINGS", None)))
+env.read_env(io.StringIO(env("APPLICATION_SETTINGS", None)))
 
 # Basic Django settings
 SECRET_KEY = env("SECRET_KEY")
@@ -17,43 +17,23 @@ if "core" not in INSTALLED_APPS:
     INSTALLED_APPS.append("core")
 
 # Configure allowed hosts and CSRF trusted origins
-CLOUDRUN_SERVICE_URLS = env("CLOUDRUN_SERVICE_URLS", default=None)
-if CLOUDRUN_SERVICE_URLS:
-    urls = CLOUDRUN_SERVICE_URLS.split(",")
-    CSRF_TRUSTED_ORIGINS = urls
-    ALLOWED_HOSTS = [urlparse(url).netloc for url in urls]
-else:
-    ALLOWED_HOSTS = ["*"]  # Safe default for dev; tighten this if needed
+ALLOWED_HOSTS = ["*"]  # Safe default for dev; tighten this if needed
 
 # Debug mode
 DEBUG = env.bool("DEBUG", default=False)
 
 # Database configuration
 DATABASES = {
-    "default": env.db()
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        # Use the service name 'db' from docker-compose.yml as the HOST
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('DB_HOST'), 
+        'PORT': env('DB_PORT'),
+    }
 }
-
-# Adjust if using Cloud SQL Auth Proxy
-if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
-    DATABASES["default"]["HOST"] = "127.0.0.1"
-    DATABASES["default"]["PORT"] = 5432
-
-# Static files (using Google Cloud Storage)
-GS_BUCKET_NAME = env("GS_BUCKET_NAME")
-STATICFILES_DIRS = []
-GS_DEFAULT_ACL = "publicRead"
-
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
-    },
-}
-
-# Static files URL (IMPORTANT if serving static assets from GCS)
-STATIC_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
 
 # Security settings
 SECURE_HSTS_SECONDS = 31536000  # 1 year

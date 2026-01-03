@@ -1,19 +1,32 @@
+"""
+Views for the todo application.
+
+Handles task management including CRUD operations, dashboard display,
+calendar views, and category management.
+"""
+
+import json
+import logging
+
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect, render
-from .forms import TaskForm
-from django_tables2.config import RequestConfig # type: ignore
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
-import json, logging     
-from .models import Task, Category
-from .tables import TaskTable, TaskFilter
+from django_tables2.config import RequestConfig
+
+from .forms import TaskForm
+from .models import Category, Task
+from .tables import TaskFilter, TaskTable
 
 logger = logging.getLogger(__name__)
 
 @login_required
 def dashboard_view(request):
-    # Filter the tasks based on the GET params and the current user's tasks
+    """
+    Display the user's task dashboard with filtering and pagination.
+
+    Shows active and completed tasks in separate tables with filter options.
+    """
     task_filter = TaskFilter(request.GET, queryset=Task.objects.filter(user=request.user))
     filtered_tasks = task_filter.qs
 
@@ -52,6 +65,7 @@ def dashboard_view(request):
 
 @login_required
 def task_view(request, task_id):
+    """Display detailed view of a single task with activity history."""
     task = get_object_or_404(Task, id=task_id, user=request.user)
 
     previous_page = request.META.get('HTTP_REFERER', '/')
@@ -63,6 +77,7 @@ def task_view(request, task_id):
 
 @login_required
 def task_create(request):
+    """Create a new task for the current user."""
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -77,6 +92,7 @@ def task_create(request):
 
 @login_required
 def task_edit(request, task_id):
+    """Edit an existing task owned by the current user."""
     task = get_object_or_404(Task, id=task_id, user=request.user)
 
     if request.method == "POST":
@@ -92,6 +108,7 @@ def task_edit(request, task_id):
 
 @login_required
 def task_delete(request, task_id):
+    """Delete a task owned by the current user with confirmation."""
     task = get_object_or_404(Task, id=task_id, user=request.user)
 
     if request.method == "POST":
@@ -109,51 +126,41 @@ def task_delete(request, task_id):
         'previous_page': previous_page
     })
 
+@login_required
+@require_POST
 def toggle_completed(request, task_id):
-    if request.method == 'POST':
-        try:
-            # Parse incoming request body
-            data = json.loads(request.body)
-            is_completed = data.get('is_completed', False)
+    """Toggle the completion status of a task via AJAX."""
+    try:
+        data = json.loads(request.body)
+        is_completed = data.get('is_completed', False)
 
-            # Retrieve the task by ID
-            task = Task.objects.get(id=task_id)
+        # Only allow users to toggle their own tasks
+        task = get_object_or_404(Task, id=task_id, user=request.user)
 
-            # Update the 'is_completed' field
-            task.is_completed = is_completed
+        task.is_completed = is_completed
+        task.status = 'completed' if is_completed else 'in progress'
+        task.save()
 
-            # Update the 'status' field based on 'is_completed'
-            task.status = 'completed' if is_completed else 'in progress'
+        return JsonResponse({
+            'success': True,
+            'is_completed': task.is_completed,
+            'status': task.status
+        })
 
-            # Save the task instance
-            task.save()
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'error': 'Invalid JSON'}, status=400)
 
-            # Return success response with updated data
-            return JsonResponse({
-                'success': True,
-                'is_completed': task.is_completed,
-                'status': task.status
-            })
+    except Exception as e:
+        logger.exception("Error toggling task completion")
+        return JsonResponse(
+            {'success': False, 'error': 'An unexpected error occurred.'},
+            status=500
+        )
 
-        except Task.DoesNotExist:
-            # If the task does not exist, return an error
-            return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
-
-        except Exception as e:
-            # Log the real error for debugging
-            logger.exception("Unexpected error in your_view")
-
-            # Return a generic message to the user
-            return JsonResponse(
-                {'success': False, 'error': 'An unexpected error occurred. Please try again later.'},
-                status=400
-            )
-
-    # Handle non-POST requests
-    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
-
+@login_required
 def calendar_view(request):
-    tasks = Task.objects.filter(user=request.user)
+    """Display tasks in a calendar format."""
+    tasks = Task.objects.filter(user=request.user).select_related('category')
 
     context = {
         'tasks': tasks,
@@ -163,6 +170,7 @@ def calendar_view(request):
 @login_required
 @require_POST
 def add_category(request):
+    """Create a new category via AJAX request."""
     name = request.POST.get('name')
     if name:
         category, created = Category.objects.get_or_create(name=name)

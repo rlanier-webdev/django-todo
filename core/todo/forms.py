@@ -1,33 +1,31 @@
+"""Forms for the todo application."""
+
 from django import forms
+
 from .models import Task
 
+
 class TaskForm(forms.ModelForm):
+    """Form for creating and editing tasks."""
+
     class Meta:
         model = Task
-        fields = ['title', 'description', 'priority', 'deadline', 'status','category']
+        fields = ['title', 'description', 'priority', 'deadline', 'status', 'category']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
-            'priority': forms.Select(attrs={'class': 'form-control'}),
-            'deadline': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
-            'status': forms.Select(attrs={'class': 'form-control'}),
-            'category': forms.Select(attrs={'class': 'form-select', 'id': 'id_category'}),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter task title',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'placeholder': 'Enter task description (optional)',
+            }),
+            'priority': forms.Select(attrs={'class': 'form-select'}),
+            'deadline': forms.DateTimeInput(attrs={
+                'class': 'form-control',
+                'type': 'datetime-local',
+            }),
+            'status': forms.Select(attrs={'class': 'form-select'}),
+            'category': forms.Select(attrs={'class': 'form-select'}),
         }
-
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-
-        # Force sync from status → is_completed
-        if instance.status == 'completed':
-            instance.is_completed = True
-        else:
-            instance.is_completed = False
-
-        # Optional fallback if status wasn't set, but checkbox was toggled
-        if not instance.status:
-            instance.status = 'completed' if instance.is_completed else 'in progress'
-
-        if commit:
-            instance.save()
-        return instance
-

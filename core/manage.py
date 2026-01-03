@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
+import environ
 import os, io
 import sys
-import environ
+
 from pathlib import Path
 
 def main():

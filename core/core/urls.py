@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
+from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 def ping_session(request):
     return HttpResponse("pong")
@@ -28,3 +30,5 @@ urlpatterns = [
 
     path('ping-session/', ping_session, name='ping-session'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
