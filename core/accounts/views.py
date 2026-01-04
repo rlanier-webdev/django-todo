@@ -64,8 +64,8 @@ def login_view(request):
         return redirect(reverse('dashboard'))
 
     if request.method == 'POST':
-        username = request.POST.get('login-username')
-        password = request.POST.get('login-password')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
