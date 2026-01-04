@@ -40,65 +40,68 @@
         <div class="col-md-6">
           <div class="card shadow border-0">
             <div class="card-body p-4">
-              <!-- Login Form -->
-              <div id="login-form">
-                <h4 class="card-title mb-4 text-center">
-                  <i class="fa-solid fa-sign-in-alt me-2 text-primary"></i>Login
-                </h4>
-                <form method="post" action="{% url 'login' %}">
-                  {% csrf_token %}
-                  {% for field in login_form %}
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="{{ field.id_for_label }}">
-                      {{ field.label }}
-                    </label>
-                    {{ field }}
-                    {% if field.errors %}
-                    <div class="invalid-feedback d-block">{{ field.errors.0 }}</div>
-                    {% endif %}
-                  </div>
-                  {% endfor %}
-                  <button type="submit" class="btn btn-primary w-100 py-2">
-                    <i class="fa-solid fa-arrow-right me-2"></i>Login
+              
+              <!-- Tab Buttons -->
+              <ul class="nav nav-tabs mb-4" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="login-tab" data-bs-toggle="tab" 
+                          data-bs-target="#login-form" type="button" role="tab">
+                    <i class="fa-solid fa-sign-in-alt me-2"></i>Login
                   </button>
-                </form>
-                <hr class="my-4">
-                <p class="text-center text-muted mb-0">
-                  Don't have an account?
-                  <a href="#" id="show-signup" class="text-decoration-none fw-semibold">Sign up here</a>
-                </p>
-              </div>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="signup-tab" data-bs-toggle="tab" 
+                          data-bs-target="#signup-form" type="button" role="tab">
+                    <i class="fa-solid fa-user-plus me-2"></i>Sign Up
+                  </button>
+                </li>
+              </ul>
 
-              <!-- Signup Form -->
-              <div id="signup-form" class="d-none">
-                <h4 class="card-title mb-4 text-center">
-                  <i class="fa-solid fa-user-plus me-2 text-success"></i>Create Account
-                </h4>
-                <form method="post" action="{% url 'signup' %}">
-                  {% csrf_token %}
-                  {% for field in signup_form %}
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" for="{{ field.id_for_label }}">
-                      {{ field.label }}
-                    </label>
-                    {{ field }}
-                    {% if field.help_text %}
-                    <small class="form-text text-muted">{{ field.help_text }}</small>
-                    {% endif %}
-                    {% if field.errors %}
-                    <div class="invalid-feedback d-block">{{ field.errors.0 }}</div>
-                    {% endif %}
-                  </div>
-                  {% endfor %}
-                  <button type="submit" class="btn btn-success w-100 py-2">
-                    <i class="fa-solid fa-check me-2"></i>Create Account
-                  </button>
-                </form>
-                <hr class="my-4">
-                <p class="text-center text-muted mb-0">
-                  Already have an account?
-                  <a href="#" id="show-login" class="text-decoration-none fw-semibold">Login here</a>
-                </p>
+              <!-- Tab Content -->
+              <div class="tab-content">
+                
+                <!-- Login Form -->
+                <div class="tab-pane fade show active" id="login-form" role="tabpanel">
+                  <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    {% for field in login_form %}
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold" for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                      </label>
+                      {{ field }}
+                      {% if field.errors %}
+                      <div class="invalid-feedback d-block">{{ field.errors.0 }}</div>
+                      {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                      <i class="fa-solid fa-arrow-right me-2"></i>Login
+                    </button>
+                  </form>
+                </div>
+
+                <!-- Signup Form -->
+                <div class="tab-pane fade" id="signup-form" role="tabpanel">
+                  <form method="post" action="{% url 'signup' %}">
+                    {% csrf_token %}
+                    {% for field in signup_form %}
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold" for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                      </label>
+                      {{ field }}
+                      {% if field.errors %}
+                      <div class="invalid-feedback d-block">{{ field.errors.0 }}</div>
+                      {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success w-100 py-2">
+                      <i class="fa-solid fa-user-plus me-2"></i>Sign Up
+                    </button>
+                  </form>
+                </div>
+
               </div>
             </div>
           </div>

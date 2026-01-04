@@ -11,3 +11,4 @@ core/db.sqlite3
 /core/staticfiles
 db.sqlite3
 core/todo/__pycache__/tables.cpython-313.pyc
+core/.envold

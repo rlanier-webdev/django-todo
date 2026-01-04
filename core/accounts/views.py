@@ -31,13 +31,28 @@ def set_timezone(request):
 def signup_view(request):
     """Handle user registration with form validation."""
     if request.method == 'POST':
+        print("POST data:", request.POST)
+    
+        # Add this to see which template Django finds
+        from django.template.loader import get_template
+        template = get_template('accounts/signup.html')
+        print("Template path:", template.origin.name)
+        
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, "Your account has been created successfully!")
             return redirect('login')
         else:
-            messages.error(request, "Please correct the errors below.")
+            # Loop through each field's errors
+            for field, errors in form.errors.items():
+                for error in errors:
+                    if field == '__all__':
+                        # Non-field errors (like password mismatch)
+                        messages.error(request, error)
+                    else:
+                        # Field-specific errors
+                        messages.error(request, f"{field.title()}: {error}")
     else:
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
@@ -68,10 +83,11 @@ def logout_view(request):
 
 
 def home_view(request):
-    """Display the home page with login and signup forms."""
-    login_form = CustomLoginForm(prefix='login')
-    signup_form = SignUpForm(prefix='signup')
-    return render(request, "home.html", {
-        "login_form": login_form,
-        "signup_form": signup_form,
-    })
+    login_form = CustomLoginForm()
+    signup_form = SignUpForm()
+    
+    context = {
+        'login_form': login_form,
+        'signup_form': signup_form,
+    }
+    return render(request, 'home.html', context)
