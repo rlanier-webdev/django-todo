@@ -2,7 +2,8 @@
 
 | Bug ID | Title | Severity | Status | Found Date | Fixed Date | Github Issue |
 |--------|-------|----------|--------|------------|------------|------------|
-| BUG-001 | Signup automatically fails without user friendly error | Critical | New | 2025-01-03 | 2025-01-04 | #8 |
+| BUG-001 | Signup automatically fails without user friendly error | Critical | Fixed | 2025-01-03 | 2025-01-04 | #8 |
+| BUG-002 | Users are able to enter more than 50 characters for a category name | Medium | Fixed | 2025-01-04 | 2025-01-04 | #9 |
 
 ---
 

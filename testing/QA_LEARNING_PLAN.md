@@ -13,9 +13,9 @@ This is your hands-on QA learning journey using the django-todo project. You'll 
 - Set up your testing environment
 
 ### Tasks
-- [ ] Set up the project locally and run it
-- [ ] Create a user account and explore all features
-- [ ] Map out all user flows (signup → login → create task → edit → delete, etc.)
+- [X] Set up the project locally and run it
+- [X] Create a user account and explore all features
+- [X] Map out all user flows (signup → login → create task → edit → delete, etc.)
 - [ ] Document the application structure
 
 ### Features to Explore
@@ -56,9 +56,9 @@ This is your hands-on QA learning journey using the django-todo project. You'll 
 ### Tasks
 
 #### 2.1 Exploratory Testing
-- [ ] Spend 30 minutes just "playing around" with the app
-- [ ] Try to break things (weird inputs, edge cases)
-- [ ] Document any bugs you find
+- [X] Spend 30 minutes just "playing around" with the app
+- [X] Try to break things (weird inputs, edge cases)
+- [X] Document any bugs you find
 
 #### 2.2 Write Test Cases
 Create test cases for each feature. Use this format:
@@ -80,12 +80,12 @@ Status: [Pass/Fail]
 
 #### Test Areas to Cover
 - [ ] User signup (valid/invalid data)
-- [ ] User login (valid/invalid credentials)
-- [ ] Task creation (all field combinations)
-- [ ] Task editing
-- [ ] Task deletion
-- [ ] Task filtering
-- [ ] Category management
+- [X] User login (valid/invalid credentials)
+- [X] Task creation (all field combinations)
+- [X] Task editing
+- [X] Task deletion
+- [X] Task filtering
+- [X] Category management
 - [ ] Timezone settings
 
 #### 2.3 Test Design Techniques
