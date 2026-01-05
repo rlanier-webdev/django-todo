@@ -16,8 +16,10 @@ class LagoClient:
             f"{self.base_url}/customers",
             headers=self.headers,
             json={
-                "external_id": external_id,
-                "name": name,
+                "customer": {
+                    "external_id": external_id,
+                    "name": name,
+                }
             },
             timeout=settings.LAGO_TIMEOUT,
         )
@@ -30,17 +32,28 @@ class LagoClient:
 
         return response.json()
 
-    def send_event(self, event_name, external_customer_id, idempotency_key=None):
+    def send_event(self, event_name, external_customer_id, idempotency_key=None, properties=None):
+        import uuid
+        from datetime import datetime
+
         headers = self.headers.copy()
         if idempotency_key:
             headers["Idempotency-Key"] = idempotency_key
+
+        # Use idempotency_key as transaction_id if provided, otherwise generate UUID
+        transaction_id = idempotency_key if idempotency_key else str(uuid.uuid4())
 
         response = requests.post(
             f"{self.base_url}/events",
             headers=headers,
             json={
-                "event": event_name,
-                "external_customer_id": external_customer_id,
+                "event": {
+                    "transaction_id": transaction_id,
+                    "code": event_name,
+                    "external_customer_id": external_customer_id,
+                    "timestamp": int(datetime.utcnow().timestamp()),
+                    "properties": properties or {},
+                }
             },
             timeout=settings.LAGO_TIMEOUT,
         )
