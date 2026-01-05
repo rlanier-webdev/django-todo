@@ -31,13 +31,6 @@ def set_timezone(request):
 def signup_view(request):
     """Handle user registration with form validation."""
     if request.method == 'POST':
-        print("POST data:", request.POST)
-    
-        # Add this to see which template Django finds
-        from django.template.loader import get_template
-        template = get_template('accounts/signup.html')
-        print("Template path:", template.origin.name)
-        
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
