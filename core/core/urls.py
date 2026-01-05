@@ -19,7 +19,9 @@ from django.urls import path, include
 from django.http import HttpResponse
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def ping_session(request):
     return HttpResponse("pong")
 

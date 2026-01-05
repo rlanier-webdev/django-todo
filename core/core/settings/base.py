@@ -24,6 +24,8 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1']),
 )
 
+env.read_env(BASE_DIR / ".env")
+
 # Load environment variables from DJANGO_SETTINGS environment variable
 django_settings = os.environ.get("DJANGO_SETTINGS")
 if django_settings:
@@ -70,6 +72,7 @@ INSTALLED_APPS = [
     'accounts',
     'todo.apps.TodoConfig',
     'core',
+    'billing',
 ]
 
 MIDDLEWARE = [
@@ -192,3 +195,10 @@ LOGGING = {
         },
     },
 }
+
+LAGO_API_URL = "http://localhost:3000/api/v1"
+LAGO_API_KEY = env('LAGO_API_KEY')
+LAGO_TIMEOUT = 5  # seconds
+
+if not LAGO_API_KEY:
+    raise RuntimeError("LAGO_API_KEY is not set in environment variables")

@@ -17,6 +17,7 @@ from django_tables2.config import RequestConfig
 from .forms import TaskForm
 from .models import Category, Task
 from .tables import TaskFilter, TaskTable
+from billing.services import track_todo_created
 
 logger = logging.getLogger(__name__)
 
@@ -78,17 +79,32 @@ def task_view(request, task_id):
 @login_required
 def task_create(request):
     """Create a new task for the current user."""
-    if request.method == 'POST':
+    if request.method == "POST":
         form = TaskForm(request.POST)
+
         if form.is_valid():
             task = form.save(commit=False)
             task.user = request.user
             task.save()
-            return redirect('dashboard')
+
+            try:
+                track_todo_created(task)
+            except Exception:
+                # Billing should never block task creation
+                logger.exception(
+                    "Failed to track todo.created event",
+                    extra={
+                        "task_id": task.id,
+                        "user_id": request.user.id,
+                    },
+                )
+
+            return redirect("dashboard")
+
     else:
         form = TaskForm()
-    
-    return render(request, 'todo/task_form.html', {'form': form})
+
+    return render(request, "todo/task_form.html", {"form": form})
 
 @login_required
 def task_edit(request, task_id):
