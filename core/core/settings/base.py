@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     'accounts',
     'todo.apps.TodoConfig',
     'core',
-    'billing',
 ]
 
 MIDDLEWARE = [
@@ -196,9 +195,3 @@ LOGGING = {
     },
 }
 
-LAGO_API_URL = "http://localhost:3000/api/v1"
-LAGO_API_KEY = env('LAGO_API_KEY')
-LAGO_TIMEOUT = 5  # seconds
-
-if not LAGO_API_KEY:
-    raise RuntimeError("LAGO_API_KEY is not set in environment variables")
